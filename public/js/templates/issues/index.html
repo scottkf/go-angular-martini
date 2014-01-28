@@ -1,0 +1,23 @@
+<h1>Issues</h1>
+<h4>Create a new issue</h4>
+<form name="form" ng-submit="create(issue)">
+  <input name="title" type="text" ng-model="issue.title"/>
+  <span ng-show="form.title.$error.unique">Must be unique</span>
+  <br />
+  <textarea rows=5 cols=100 ng-model="issue.body"></textarea>
+  <br />
+  <button ng-click="cancel()">Cancel</button>
+  <input type="submit" value="Save" />
+</form>
+
+<div id="issues">
+  <div class="issue" ng-repeat="issue in issues" ng-include="'/js/templates/issues/_issue.html'">
+  </div>
+</div>
+
+
+<h3>Search by issue title</h3>
+<form>
+  <input name="title" type="text" value="" />
+  <input type="submit" value="search" />
+</form>

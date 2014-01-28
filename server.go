@@ -14,7 +14,7 @@ func main() {
 	m.Use(render.Renderer())
 	m.MapTo(db, (*DB)(nil))
 
-	m.Get("/issues", func(req *http.Request, r render.Render) {
+	m.Get("/api/issues", func(req *http.Request, r render.Render) {
 		title := req.URL.Query().Get("title")
 		if title != "" {
 			r.JSON(http.StatusOK, db.Find(title))
@@ -23,7 +23,7 @@ func main() {
 		r.JSON(http.StatusOK, db.GetAll())
 	})
 
-	m.Get("/issues/:id", func(r render.Render, params martini.Params) {
+	m.Get("/api/issues/:id", func(r render.Render, params martini.Params) {
 		id, err := strconv.Atoi(params["id"])
 		issue := db.Get(id)
 		if err != nil || issue == nil {
@@ -32,7 +32,7 @@ func main() {
 		r.JSON(http.StatusOK, issue)
 	})
 
-	m.Post("/issues", binding.Form(Issue{}), func(w, issue Issue, r render.Render, params martini.Params) {
+	m.Post("/api/issues", binding.Json(Issue{}), func(w, issue Issue, r render.Render, params martini.Params) {
 		_, err := db.Add(&issue)
 		if err != nil {
 			r.JSON(http.StatusConflict, nil)
@@ -41,7 +41,7 @@ func main() {
 		r.JSON(http.StatusCreated, issue)
 	})
 
-	m.Put("/issues/:id", binding.Form(Issue{}), func(issue Issue, r render.Render, params martini.Params) {
+	m.Put("/api/issues/:id", binding.Json(Issue{}), func(issue Issue, r render.Render, params martini.Params) {
 		id, err := strconv.Atoi(params["id"])
 		if err != nil {
 			r.JSON(http.StatusInternalServerError, nil)
@@ -56,7 +56,7 @@ func main() {
 		r.JSON(http.StatusOK, issue)
 	})
 
-	m.Delete("/issues/:id", func(r render.Render, params martini.Params) {
+	m.Delete("/api/issues/:id", func(r render.Render, params martini.Params) {
 		id, err := strconv.Atoi(params["id"])
 		issue := db.Get(id)
 		if err != nil || issue == nil {
@@ -65,6 +65,10 @@ func main() {
 		}
 		db.Delete(id)
 		r.JSON(http.StatusNoContent, nil)
+	})
+
+	m.Get("/**", func(r render.Render) {
+		r.HTML(200, "index", "")
 	})
 
 	m.Run()

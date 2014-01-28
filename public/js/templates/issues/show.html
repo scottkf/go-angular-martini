@@ -1,0 +1,15 @@
+<form name="form" ng-submit="update(issue)" ng-hide="isEditing == false">
+  <input type="text" ng-model="issue.title"/>
+  <br />
+  <textarea rows=5 cols=100 ng-model="issue.body"></textarea>
+  <br />
+  <button ng-click="cancel()">Cancel</button>
+  <input type="submit" value="Save" />
+</form>
+<div class="issue" ng-hide="isEditing == true" ng-include="'/js/templates/issues/_issue.html'">
+</div>
+
+<button ng-click="edit()">Edit</button>
+<button ng-click="destroy(issue)">Remove</button>
+
+<a href="/">Go back</a>

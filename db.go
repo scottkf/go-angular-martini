@@ -41,6 +41,9 @@ func init() {
 	db.Add(&Issue{Id: 1, Title: "Aeroflex Broke", Body: "Jodi said orders stopped importing"})
 	db.Add(&Issue{Id: 2, Title: "Alerts not working", Body: "I never received any alerts for PO#123"})
 	db.Add(&Issue{Id: 3, Title: "Revert this order", Body: "Please revert this order to new"})
+	db.Add(&Issue{Id: 4, Title: "Aeroflex Broke 1", Body: "Jodi said orders stopped importing"})
+	db.Add(&Issue{Id: 5, Title: "Alerts not working 1", Body: "I never received any alerts for PO#123"})
+	db.Add(&Issue{Id: 6, Title: "Revert this order 1", Body: "Please revert this order to new"})
 }
 
 func (db *issuesDB) GetAll() []*Issue {
@@ -50,9 +53,9 @@ func (db *issuesDB) GetAll() []*Issue {
 		return nil
 	}
 	ar := make([]*Issue, len(db.m))
-	i := 0
+	i := 1
 	for _, v := range db.m {
-		ar[i] = v
+		ar[len(db.m)-i] = v
 		i++
 	}
 	return ar
