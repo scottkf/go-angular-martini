@@ -38,9 +38,9 @@ func init() {
 		m: make(map[int]*Issue),
 	}
 	// Fill the database
-	db.Add(&Issue{Id: 1, Title: "Test 1", Body: "Test"})
-	db.Add(&Issue{Id: 2, Title: "Test 2", Body: "Test"})
-	db.Add(&Issue{Id: 3, Title: "Test 3", Body: "Test"})
+	db.Add(&Issue{Id: 1, Title: "Aeroflex Broke", Body: "Jodi said orders stopped importing"})
+	db.Add(&Issue{Id: 2, Title: "Alerts not working", Body: "I never received any alerts for PO#123"})
+	db.Add(&Issue{Id: 3, Title: "Revert this order", Body: "Please revert this order to new"})
 }
 
 func (db *issuesDB) GetAll() []*Issue {
