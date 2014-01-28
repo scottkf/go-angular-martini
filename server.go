@@ -14,7 +14,12 @@ func main() {
 	m.Use(render.Renderer())
 	m.MapTo(db, (*DB)(nil))
 
-	m.Get("/issues", func(r render.Render) {
+	m.Get("/issues", func(req *http.Request, r render.Render) {
+		title := req.URL.Query().Get("title")
+		if title != "" {
+			r.JSON(http.StatusOK, db.Find(title))
+			return
+		}
 		r.JSON(http.StatusOK, db.GetAll())
 	})
 

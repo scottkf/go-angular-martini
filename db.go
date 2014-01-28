@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"regexp"
 	"sync"
 )
 
@@ -38,7 +39,7 @@ func init() {
 	}
 	// Fill the database
 	db.Add(&Issue{Id: 1, Title: "Test 1", Body: "Test"})
-	db.Add(&Issue{Id: 2, Title: "Test 2 ", Body: "Test"})
+	db.Add(&Issue{Id: 2, Title: "Test 2", Body: "Test"})
 	db.Add(&Issue{Id: 3, Title: "Test 3", Body: "Test"})
 }
 
@@ -61,8 +62,9 @@ func (db *issuesDB) Find(title string) []*Issue {
 	db.RLock()
 	defer db.RUnlock()
 	var res []*Issue
+	re := regexp.MustCompile("(?i)" + title)
 	for _, v := range db.m {
-		if v.Title == title || title == "" {
+		if re.MatchString(v.Title) || title == "" {
 			res = append(res, v)
 		}
 	}
@@ -75,27 +77,27 @@ func (db *issuesDB) Get(id int) *Issue {
 	return db.m[id]
 }
 
-func (db *issuesDB) Add(a *Issue) (int, error) {
+func (db *issuesDB) Add(i *Issue) (int, error) {
 	db.Lock()
 	defer db.Unlock()
-	if !db.isUnique(a) {
+	if !db.isUnique(i) {
 		return 0, ErrAlreadyExists
 	}
 	// Get the unique ID
 	db.seq++
-	a.Id = db.seq
+	i.Id = db.seq
 	// Store
-	db.m[a.Id] = a
-	return a.Id, nil
+	db.m[i.Id] = i
+	return i.Id, nil
 }
 
-func (db *issuesDB) Update(a *Issue) error {
+func (db *issuesDB) Update(i *Issue) error {
 	db.Lock()
 	defer db.Unlock()
-	if !db.isUnique(a) {
+	if !db.isUnique(i) {
 		return ErrAlreadyExists
 	}
-	db.m[a.Id] = a
+	db.m[i.Id] = i
 	return nil
 }
 
@@ -114,6 +116,6 @@ func (db *issuesDB) isUnique(i *Issue) bool {
 	return true
 }
 
-func (a *Issue) String() string {
-	return fmt.Sprintf("%d - %s (%s)", a.Id, a.Title, a.Body)
+func (i *Issue) String() string {
+	return fmt.Sprintf("%d - %s (%s)", i.Id, i.Title, i.Body)
 }
