@@ -17,7 +17,7 @@
 
 
 <h3>Search by issue title</h3>
-<form>
-  <input name="title" type="text" value="" />
+<form ng-submit="search()">
+  <input name="title" ng-model="searchTitle" type="text" />
   <input type="submit" value="search" />
 </form>

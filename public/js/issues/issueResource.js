@@ -6,6 +6,15 @@ issues.factory("Issue", function ($resource) {
     "/api/issues/:Id",
     {Id: "@id" },
     {
+      "search": {
+        isArray:true,
+        method: 'GET',
+        params: {
+          title: '@query'
+        }
+      }
+    },
+    {
       "update": {
         method: "PUT",
         // transformRequest: function (data) {

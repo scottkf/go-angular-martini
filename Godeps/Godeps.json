@@ -1,0 +1,25 @@
+{
+	"ImportPath": "github.com/scottkf/angular-example",
+	"GoVersion": "go1.2",
+	"Deps": [
+		{
+			"ImportPath": "github.com/codegangsta/inject",
+			"Rev": "346a984957aa24276ebc5e7b16b3ac6a50fe8138"
+		},
+		{
+			"ImportPath": "github.com/codegangsta/martini",
+			"Comment": "v0.1-79-gec4ae4a",
+			"Rev": "ec4ae4a9fa9e404c1a7ca3b3419d6b75649aaee7"
+		},
+		{
+			"ImportPath": "github.com/codegangsta/martini-contrib/binding",
+			"Comment": "v0.1-123-geb23f49",
+			"Rev": "eb23f4925fb85db43df94d992501513ad9265e6f"
+		},
+		{
+			"ImportPath": "github.com/codegangsta/martini-contrib/render",
+			"Comment": "v0.1-123-geb23f49",
+			"Rev": "eb23f4925fb85db43df94d992501513ad9265e6f"
+		}
+	]
+}

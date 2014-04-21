@@ -1,5 +1,5 @@
 $(document).on('ready', function() {
-  $.getJSON('/issues', function(data) {
+  $.getJSON('/api/issues', function(data) {
     if (data == null) {
       return
     }
@@ -8,10 +8,23 @@ $(document).on('ready', function() {
     })
   })
 
+  var o = {
+    name: "Hello"
+  }
+
+  var f = function() {
+    console.log(this);
+  }
+  f()
+  f.apply(o, [1,2,3])
+  f.call(o, 1, 2, 3)
+  f.bind(this)()
+
+
   $(document).on('click', '.delete', function(e) {
     $this = $(this)
     $.ajax({
-      url: '/issues/' + $(this).parent().data('id'),
+      url: '/api/issues/' + $(this).parent().data('id'),
       type: 'DELETE',
       complete: function(data) {
         if (data.status == 204) {
@@ -31,7 +44,7 @@ $(document).on('ready', function() {
     if ($searchValue == "") {
       return
     }
-    $.getJSON('/issues?title='+$searchValue, function(data) {
+    $.getJSON('/api/issues?title='+$searchValue, function(data) {
       $('#issues').html('');
       if (data == null) {
         return
@@ -41,7 +54,7 @@ $(document).on('ready', function() {
       });
     })
   })
-})
+});
 
 
 function createIssue(issue) {

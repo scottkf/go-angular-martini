@@ -3,10 +3,17 @@
 issues.controller('IssueListCtrl', ['$scope', '$resource', 'Issue', function($scope, $resource, Issue) {
   $scope.issues = Issue.query();
   $scope.issue = new Issue({});
+  $scope.searchTitle = "";
 
   $scope.cancel = function() {
     $scope.issue = new Issue({});
     $scope.form.$setPristine();
+  }
+
+  $scope.search = function() {
+    Issue.search({title: $scope.searchTitle}, function(results) {
+      $scope.issues = results;
+    })
   }
 
   $scope.create = function(issue) {

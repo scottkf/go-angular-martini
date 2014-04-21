@@ -67,6 +67,10 @@ func main() {
 		r.JSON(http.StatusNoContent, nil)
 	})
 
+	m.Get("/old", func(r render.Render) {
+		r.HTML(200, "old", "")
+	})
+
 	m.Get("/**", func(r render.Render) {
 		r.HTML(200, "index", "")
 	})
